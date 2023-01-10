@@ -39,5 +39,55 @@ class Solution:
                 
 
         return cordinate
+    
+    
+    """
+    class Solution:
+        def queensAttacktheKing(self, queens: List[List[int]], king: List[int]) -> List[List[int]]:
+
+
+            position = [(0, 1), (0, -1), (-1, 0), (1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1)]
+            cordinate = []
+
+            for index in range(8):
+
+                row = king[0]
+                column = king[1]
+
+                while self.is_inboard(row, column):
+
+                    if self.is_queen(row, column, queens):
+                        cordinate.append([row, column])
+
+                        break
+
+                    row += position[index][0]
+                    column += position[index][1]
+
+            return cordinate
+
+
+        def is_inboard(self, row, column):
+
+            if row < 0 or row > 7 or column > 7 or column < 0:
+                return False
+
+            return True
+
+
+        def is_queen(self, row, column, queens):
+
+            self.queens = queens
+
+            for queen in queens:
+
+                if queen == [row, column]:
+                    return True
+
+            return False
+
+
+    
+    """
 
         
