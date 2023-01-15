@@ -57,7 +57,6 @@ class Solution:
         for i in range(len(grid3)):
             grid_set.add(grid3[i])
         
-        print(grid_set)
 
 
         return True if grid_set == check_set  else False
