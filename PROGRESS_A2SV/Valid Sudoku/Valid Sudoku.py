@@ -59,12 +59,12 @@ class Solution:
 
         for row in range(0, 9-2, 3):
 
-            grid1 = self.board[row][:3] + self.board[row + 1][:3] + self.board[row + 2][:3]
-            grid2 = self.board[row][3:6] + self.board[row + 1][3:6] + self.board[row + 2][3:6]
-            grid3 = self.board[row][6:] + self.board[row + 1][6:] + self.board[row + 2][6:]
+            row1 = self.board[row][:3] + self.board[row + 1][:3] + self.board[row + 2][:3]
+            row2 = self.board[row][3:6] + self.board[row + 1][3:6] + self.board[row + 2][3:6]
+            row3 = self.board[row][6:] + self.board[row + 1][6:] + self.board[row + 2][6:]
 
 
-            grid = [grid1, grid2, grid3]
+            grid = [row1, row2, row3]
 
             for index in range(3):
 
