@@ -7,7 +7,6 @@ class Solution:
         
         count_zero = 0
         count_one = 0
-        count_two = 0
         
         for num in nums:
             
@@ -17,8 +16,6 @@ class Solution:
             elif num == 1:
                 count_one += 1
             
-            else:
-                count_two += 1
         
         for index in range(len(nums)):
 
