@@ -1,18 +1,20 @@
 class Solution:
     def construct2DArray(self, original: List[int], m: int, n: int) -> List[List[int]]:
-
-        row = m
-        col = n
         
         if m*n != len(original):
             return []
 
-        matrix = [[0 for i in range(col)] for j in range(row)]
+        matrix = []
         index = 0
 
-        for i in range(row):
-            for j in range(col):
-                matrix[i][j] = original[index]
+        for i in range(m):
+
+            row = []
+
+            for j in range(n):
+                row.append(original[index])
                 index += 1
+
+            matrix.append(row)
 
         return matrix
