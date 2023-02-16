@@ -17,7 +17,7 @@ class Solution:
                 head = curr_1
                 curr_1 = curr_1.next
 
-            elif curr_1 and curr_2 and curr_1.val >= curr_2.val:
+            else:
                 head.next = curr_2
                 head = curr_2
                 curr_2 = curr_2.next
