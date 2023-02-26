@@ -1,14 +1,19 @@
 class Solution:
     def minOperations(self, logs: List[str]) -> int:
         
-        CrawlerLog = []
+        Count = 0
         
         for i in range(len(logs)):
             
-            if logs[i] == "../" and CrawlerLog:
-                CrawlerLog.pop()
+            if logs[i] == "../" and Count:
+                Count -= 1
                 
             elif logs[i] != "./" and logs[i] != "../":
-                CrawlerLog.append(logs[i])
+                Count += 1
         
-        return len(CrawlerLog )
+        return Count
+    
+    
+    
+    
+    
