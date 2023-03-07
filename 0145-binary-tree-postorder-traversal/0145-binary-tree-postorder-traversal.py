@@ -5,17 +5,25 @@ class TreeNode:
         self.right = right
 
 class Solution:
-    def __init__(self):
-        self.postorder = []
-        
     def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        order = self.travers(root)
-        return order
         
-    def travers(self, root):
-        if root:
-            self.travers(root.left)
-            self.travers(root.right)
-            self.postorder.append(root.val)
-            
-        return self.postorder
+        stack = []
+        visited = []
+        curr = root
+        
+        while True:
+            while curr:
+                stack.append(curr)
+                curr = curr.left
+                
+            if stack and stack[-1].right == None:
+                popped = stack.pop()
+                visited.append(popped.val)
+            elif stack:
+                curr = stack[-1].right
+                stack[-1].right = None
+                
+            if not stack:break
+        
+        return visited
+    
