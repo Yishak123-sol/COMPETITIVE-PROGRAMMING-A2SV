@@ -5,16 +5,21 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def __init__(self):
-        self.prev_val = float('-inf')
-        
+    
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        if not root:return True
-        if root:
-            left_root = self.isValidBST(root.left)
-            if self.prev_val >= root.val:return False
-            self.prev_val = root.val
-            right_root = self.isValidBST(root.right)
+        current = root
+        stack = []
+        visited = []
+        while current or stack:
+            while current:
+                stack.append(current)
+                current = current.left
             
-        return left_root and right_root
+            popped = stack.pop()
+            if visited:
+                if visited[-1].val >= popped.val: return False
+            visited.append(popped)
+            current = popped.right
+        
+        return True
     
