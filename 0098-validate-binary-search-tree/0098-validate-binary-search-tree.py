@@ -5,21 +5,13 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        current = root
-        stack = []
-        visited = []
-        while current or stack:
-            while current:
-                stack.append(current)
-                current = current.left
-            
-            popped = stack.pop()
-            if visited:
-                if visited[-1].val >= popped.val: return False
-            visited.append(popped)
-            current = popped.right
-        
-        return True
+        low = float('-inf')
+        high = float('inf')
+        return self.valid(root, low, high)
     
+    def valid(self, root, low, high):
+        if not root:return True
+        if root.val <= low or root.val >= high:return False
+        
+        return self.valid(root.right, root.val, high) and self.valid(root.left, low, root.val)
