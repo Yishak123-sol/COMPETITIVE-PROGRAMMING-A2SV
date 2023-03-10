@@ -6,18 +6,24 @@
 #         self.right = right
 class Solution:
     def __init__(self):
-        self.same_level = defaultdict(list)
-    
+        self.ans = []
+        
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        same_level = self.sameLevel(root, 0)
-        if not same_level:return same_level
-        return same_level.values()
-    
-    def sameLevel(self, root, row):
-        if not root:return
-        
-        self.same_level[row].append(root.val)
-        self.sameLevel(root.left, row+1)
-        self.sameLevel(root.right, row+1)
-        
-        return self.same_level
+        if root is None:return []
+        queue = deque([root])
+        while queue:
+            cur_level = []
+            length = len(queue)
+            
+            for i in range(length):
+                node = queue.popleft()
+                cur_level.append(node.val)
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+                length -= 1
+                
+            self.ans.append(cur_level)
+      
+        return self.ans
