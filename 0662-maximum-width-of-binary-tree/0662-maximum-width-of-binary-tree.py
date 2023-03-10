@@ -5,25 +5,26 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def __init__(self):
-        self.dic = defaultdict(list)
-        
     def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        maxval = 0
-        res = self.maxwid(root, 0, 0)
-        for key, value in res.items():
-            if (len(value)) > 1:
-                prev = value[-1]-value[0] + 1
-            else:
-                prev = 1
-            maxval = max(prev, maxval)
-        return maxval
-    
-    def maxwid(self, root, row, index):
-        if root:
-            self.dic[row].append(index)
-            self.maxwid(root.left, row+1, 2*index)
-            self.maxwid(root.right, row+1, 2*index+1)
         
-        return self.dic
+        res = 1
+        root.val = 0
+        q = deque([root])
         
+        while q:
+            
+            if len(q) > 1:
+                res = max(res, q[-1].val - q[0].val + 1)
+                
+            for i in range(len(q)):
+                node = q.popleft()
+                
+                if node.left:
+                    node.left.val = node.val * 2
+                    q.append(node.left)
+                    
+                if node.right:
+                    node.right.val = (node.val * 2) + 1
+                    q.append(node.right)
+                        
+        return res
