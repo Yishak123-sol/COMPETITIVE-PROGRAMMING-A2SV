@@ -10,9 +10,12 @@ class Solution:
             for j in range(col):
                 if grid[i][j] == 1:
                     res += 4
-                    for r, c in direction:
-                        if self.inbound(r+i, c+j, grid):
-                            res -= grid[i+r][j+c]
+                    
+                    if self.inbound(i, j-1, grid) and grid[i][j-1] == 1:
+                        res -= 2
+
+                    if self.inbound(i-1, j, grid) and grid[i-1][j] == 1:
+                        res -= 2
         
         return res
     
