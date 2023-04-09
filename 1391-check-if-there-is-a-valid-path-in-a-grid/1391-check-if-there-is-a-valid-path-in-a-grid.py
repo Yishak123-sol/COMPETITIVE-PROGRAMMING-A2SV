@@ -11,22 +11,17 @@ class Solution:
                       6: [(0,1),(-1,0)]}
         
         visited = set()
-        stack = []
-        
-        visited.add((0, 0))
-        stack.append((0, 0))
-        while stack:
-            r, c = stack.pop()
+        queue = deque()
+        queue.append((0, 0))
+        while queue:
+            r, c = queue.popleft()
             visited.add((r, c))
             if r == len(grid)-1 and c == len(grid[0])-1:return True
             
-            for vertice in directions[grid[r][c]]:
-                row, col = r + vertice[0], c+vertice[1]
-                
-                if self.inbound(row, col, grid) and (row, col) not in visited and  (-vertice[0], -vertice[1]) in directions[grid[row][col]]:
-                    stack.append((row, col))
+            for dx, dy in directions[grid[r][c]]:
+                row, col = r+dx, dy+c
+                if self.inbound(row, col, grid) and (row, col) not in visited and (-dx, -dy) in directions[grid[row][col]]:
+                    queue.append((row, col))
                     
-        return False
-    
     def inbound(self, r, c, grid):
         return r >= 0 and r < len(grid) and c >= 0 and c < len(grid[0])
