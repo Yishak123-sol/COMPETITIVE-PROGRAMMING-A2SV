@@ -11,19 +11,21 @@ class Solution:
                       6: [(0,1),(-1,0)]}
         
         visited = set()
-        return self.depth_firstSearch(0, 0, grid, visited, directions)
-    
-    def depth_firstSearch(self, r, c, grid, visited, directions):
+        stack = []
         
-        if r == len(grid)-1 and c == len(grid[0])-1:return True
-        visited.add((r, c))
-        
-        for vertice in directions[grid[r][c]]:
-            row, col = vertice[0]+r, vertice[1]+c
+        visited.add((0, 0))
+        stack.append((0, 0))
+        while stack:
+            r, c = stack.pop()
+            visited.add((r, c))
+            if r == len(grid)-1 and c == len(grid[0])-1:return True
             
-            if self.inbound(row, col, grid) and (row, col) not in visited and (-vertice[0], -vertice[1]) in directions[grid[row][col]]:
-                if self.depth_firstSearch(row, col, grid, visited, directions):
-                    return True
+            for vertice in directions[grid[r][c]]:
+                row, col = r + vertice[0], c+vertice[1]
+                
+                if self.inbound(row, col, grid) and (row, col) not in visited and  (-vertice[0], -vertice[1]) in directions[grid[row][col]]:
+                    stack.append((row, col))
+                    
         return False
     
     def inbound(self, r, c, grid):
