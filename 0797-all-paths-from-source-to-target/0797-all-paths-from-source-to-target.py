@@ -1,15 +1,18 @@
 class Solution:
+    
     def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
         
-        n = len(graph)
+        stack = []
+        stack.append((0, [0]))
         paths = []
-        def dfs(node, path):
-            if node == n-1:
+        
+        while stack:
+            
+            node, path = stack.pop()
+            if node == len(graph)-1:
                 paths.append(path)
-                
             else:
                 for neighbor in graph[node]:
-                    dfs(neighbor, path+[neighbor])
-        dfs(0, [0])
-        
+                    stack.append((neighbor, path+[neighbor]))
+                
         return paths
