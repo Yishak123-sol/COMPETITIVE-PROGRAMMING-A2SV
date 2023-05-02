@@ -8,29 +8,19 @@ class Employee:
 """
 
 class Solution:
-    def __init__(self):
-        self.ans = 0
-        
     def getImportance(self, employees: List['Employee'], id: int) -> int:
         
-        visited = set()
         graph = defaultdict(list)
         importance = defaultdict(int)
         for i in range(len(employees)):
             graph[employees[i].id] = employees[i].subordinates
             importance[employees[i].id] = int(employees[i].importance)
-                
         
         for i in range(len(employees)):
             if employees[i].id == id:
-                return self.dfs(id, employees, graph, visited, importance)
+                return self.dfs(id, employees, graph, importance)
                 
-    def dfs(self, node, employees, graph, visited, importance):
+    def dfs(self, node, employees, graph, importance):
+        return (importance[node] + sum(self.dfs(employee, employees, graph, importance) for employee in graph[node]))
         
-        self.ans += importance[node]
-        visited.add(node)
-        for employee in graph[node]:
-            if employee not in visited:
-                self.dfs(employee, employees, graph, visited,importance)
         
-        return self.ans
