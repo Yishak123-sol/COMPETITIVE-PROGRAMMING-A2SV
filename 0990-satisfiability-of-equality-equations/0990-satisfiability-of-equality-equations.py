@@ -1,44 +1,47 @@
 class Solution:
     def equationsPossible(self, equations: List[str]) -> bool:
         
-        uf = UnionFind(26)
+        equivalent = UnionFind()
         for eq in equations:
             if eq[1] == "=":
-                uf.union(ord(eq[0]) - ord('a'), ord(eq[3]) - ord('a'))
+                equivalent.union(ord(eq[0])-97, ord(eq[3])-97)
+                
         for eq in equations:
             if eq[1] == "!":
-                if uf.find(ord(eq[0]) - ord('a')) == uf.find(ord(eq[3]) - ord('a')):
+                if equivalent.find(ord(eq[0])-97) == equivalent.find(ord(eq[3])-97):
                     return False
         return True
-            
-        
-            
-class UnionFind:
-    def __init__(self, n):
-        self.parent = list(range(n))
-        self.rank = [0] * n
     
-    def find(self, x):
-        
-        while x != self.parent[x]:
-            self.parent[x] = self.parent[self.parent[x]]
-            x = self.parent[x]
-            
-        return x
+class UnionFind():
+    
+    def __init__(self):
+        self.root = [i for i in range(26)]
+        self.rank = [0 for _ in range(26)]
     
     def union(self, x, y):
         
-        px, py = self.find(x), self.find(y)
-        if px == py:
-            return
-        if self.rank[px] < self.rank[py]:
-            self.parent[px] = py
-        elif self.rank[px] > self.rank[py]:
-            self.parent[py] = px
+        rootx = self.find(x)
+        rooty = self.find(y)
+        
+        if rootx == rooty:
+            return 
+        
+      
+        if self.rank[rootx] == self.rank[rooty]:
+            self.rank[rootx] += 1
+        
+        if self.rank[rootx] >= self.rank[rooty]:
+            self.root[rooty] = rootx
         else:
-            self.parent[py] = px
-            self.rank[px] += 1
+            self.root[rootx] = rooty
+        
+    def find(self, x):
+        
+        if self.root[x] != x:
+            self.root[x] = self.find(self.root[x])
+            
+        return self.root[x]
+            
 
-
-    
+            
         
