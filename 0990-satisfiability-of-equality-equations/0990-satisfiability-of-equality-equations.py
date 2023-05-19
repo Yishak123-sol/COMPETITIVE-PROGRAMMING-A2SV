@@ -9,7 +9,7 @@ class Solution:
     
         for equ in equations:
             if equ[1] == '!':
-                if self.bfs(equ[0], connected, equ[3]) or self.bfs(equ[3], connected, equ[0]):
+                if self.bfs(equ[0], connected, equ[3]):
                     return False
                 
         return True
@@ -28,6 +28,7 @@ class Solution:
             for neighbor in connected[node]:
                 if neighbor not in visited:
                     queue.append(neighbor)
+                    
                 if neighbor == tar:return True
                 
         return False
