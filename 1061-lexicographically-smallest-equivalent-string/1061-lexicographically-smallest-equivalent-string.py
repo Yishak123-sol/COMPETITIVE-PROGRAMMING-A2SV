@@ -6,18 +6,18 @@ class Solution:
         for i in range(len(s1)):
             ob.union(s1[i], s2[i])
         
-        ansHolder = ""
+        ans = ""
         for i in range(len(baseStr)):
-            ansHolder += ob.find(baseStr[i])
+            ans += ob.find(baseStr[i])
         
-        return ansHolder
+        return ans
             
         
 class UnionFind():
     def __init__(self):
         self.root = defaultdict(list)
         
-        for i in range(97, 123):
+        for i in range(ord('a'), ord('z')+1):
             self.root[chr(i)] = chr(i)
         
     def union(self, x, y):
