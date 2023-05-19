@@ -1,51 +1,73 @@
 class Solution:
     def smallestStringWithSwaps(self, s: str, pairs: List[List[int]]) -> str:
-        from collections import defaultdict
         
         n = len(s)
-        uf = UnionFind(n)
-        # Build the graph
+        ob = UnionFind(n)
+        
         for i, j in pairs:
-            uf.union(i, j)
+            ob.union(i, j)
             
-        groups = defaultdict(list)
-        # Group together connected nodes
+        connected_pairs = defaultdict(list)
         for i in range(n):
-            groups[uf.find(i)].append(i)
-        # Construct the new string
-        res = list(s)
-        for group in groups.values():
+            connected_pairs[ob.find(i)].append(i)
+        
+        ans = list(s)
+        for connected in connected_pairs.values():
+            chars = sorted([s[i] for i in connected])
             
-            chars = sorted([s[i] for i in group])
-            for i, c in zip(group, chars):
-                res[i] = c
+            for i, char in zip(connected, chars):
+                ans[i] = char
                 
-        return ''.join(res)   
+        ans = "".join(ans)
         
-        
-
-        from collections import defaultdict
-
+        return ans
+            
+            
 class UnionFind:
+    
     def __init__(self, n):
-        self.parent = list(range(n))
-        self.rank = [0] * n
+        
+        self.root = [i for i in range(n)]
+        self.rank = [0 for _ in range(n)]
+        
+    def union(self, x, y):
+        
+        rootx = self.find(x)
+        rooty = self.find(y)
+        
+        if rootx == rooty:
+            return 
+            
+        if self.rank[rootx] == self.rank[rooty]:
+            self.rank[rootx] += 1
+        
+        if self.rank[rootx] >= self.rank[rooty]:
+            self.root[rooty] = rootx
+        else:
+            self.root[rootx] = rooty
     
     def find(self, x):
-        while x != self.parent[x]:
-            self.parent[x] = self.parent[self.parent[x]]
-            x = self.parent[x]
-        return x
-    
-    def union(self, x, y):
-        px, py = self.find(x), self.find(y)
-        if px == py:
-            return
-        if self.rank[px] < self.rank[py]:
-            self.parent[px] = py
-        elif self.rank[px] > self.rank[py]:
-            self.parent[py] = px
-        else:
-            self.parent[py] = px
-            self.rank[px] += 1
-
+        
+        if self.root[x] != x:
+            self.root[x] = self.find(self.root[x])
+        
+        return self.root[x]
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            
+            
+            
