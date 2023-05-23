@@ -14,8 +14,9 @@ class Solution:
         
         uf = Unionfind(n)
         cost = 0
-        distances.sort()
-        for distance, i, j in distances:
+        heapq.heapify(distances)
+        while distances:
+            distance, i, j = heapq.heappop(distances)
             if uf.find(i) != uf.find(j):
                 cost += distance
                 uf.union(i, j)
