@@ -7,7 +7,7 @@ class Solution:
         for i in range(len(grid2)):
             for j in range(len(grid2[0])):
                 if (i, j) not in visited and grid2[i][j] == 1:
-                    island = set()
+                    island = []
                     self.dfs(i, j, visited, island, grid2, directions)
                     
                     for r, c in island:
@@ -21,7 +21,7 @@ class Solution:
     def dfs(self, r, c, visited, island, grid, directions):
         
         visited.add((r, c))
-        island.add((r, c))
+        island.append((r, c))
         
         for x, y in directions:
             
