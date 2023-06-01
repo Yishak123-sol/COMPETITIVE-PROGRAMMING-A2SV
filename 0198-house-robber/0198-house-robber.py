@@ -1,14 +1,33 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        
+        print(len(nums))
+        self.memo = {}
         if len(nums) == 1:return nums[0]
-        f  = nums[0]
-        s = max(nums[0], nums[1])
+        if len(nums) == 2:return max(nums[0], nums[1])
         
-        for i in range(2, len(nums)):
-            total = nums[i] + f
-            choice = max(total, s)
+        return self.helper(len(nums)-1, nums)
+    
+    def helper(self, idx, nums):
+        if idx < 0:return 0
+        if idx == 0:return nums[0]
+        if idx == 1:return max(nums[0], nums[1])
+        
+        if idx-2 not in self.memo:
+            self.memo[idx-2] = self.helper(idx-2, nums)
+        if idx -1 not in self.memo:
+            self.memo[idx-1] = self.helper(idx-1, nums)
             
-            s, f = choice, s
-            
-        return s
+        return max(self.memo[idx-2]+nums[idx], self.memo[idx-1])
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
