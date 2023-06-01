@@ -2,22 +2,38 @@ class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
         
         if amount == 0:return 0
+        self.memo = {}
+        self.dp(amount, coins)
         
-        dp = [0]*(amount+1)
-        for curr_amount in range(1, len(dp)):
-            temp = []
-            for coin in coins:
-                if curr_amount - coin < 0:
-                    continue
-                    
-                if dp[curr_amount-coin] < 0:
-                    continue
-                
-                temp.append(dp[curr_amount-coin] + 1)
-                
-            if len(temp) > 0:
-                dp[curr_amount] = min(temp)
-            else:
-                dp[curr_amount] = -1
+        return self.memo[amount] if self.memo[amount] != 1000000000 else -1
         
-        return dp[len(dp)-1]
+        
+    def dp(self, amount, coins):
+        
+        if amount == 0:return 0
+        
+        
+        temp = 1000000000
+        for i in range(len(coins)):
+            
+            curr_amount = amount - coins[i]
+            if curr_amount < 0:
+                continue
+                
+            if curr_amount not in self.memo:
+                self.memo[curr_amount] = self.dp(curr_amount, coins) + 1
+                
+            temp = min(self.memo[curr_amount], temp)
+
+        self.memo[amount] = temp
+        
+        return self.memo[amount] 
+       
+        
+        
+        
+        
+        
+        
+        
+        
