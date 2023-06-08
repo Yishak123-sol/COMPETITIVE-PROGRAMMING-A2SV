@@ -1,18 +1,23 @@
 class Solution:
     def maxLength(self, arr: List[str]) -> int:
         
-        def backTrack(i, curr):
-            if i == len(arr):
-                self.res = max(self.res, len(curr))
-                return
-            
-            if len(set(arr[i])) == len(arr[i]):
-                if all(c not in curr for c in arr[i]):
-                    backTrack(i + 1, curr + arr[i])
-                
-            backTrack(i + 1, curr)
+        self.ans = 0
+        self.back_track(arr, "",0)
+        return self.ans
+    
+    def back_track(self, arr, res, idx):
         
-        self.res = 0
-        backTrack(0, '')
-        return self.res
-                
+        if idx == len(arr):
+            self.ans = max(self.ans, len(res))
+            return
+        
+        if len(set(arr[idx])) == len(arr[idx]):
+            if all( char not in set(res)  for char in arr[idx]):
+                self.back_track(arr, res+arr[idx], idx+1)
+        self.back_track(arr, res, idx+1)
+            
+
+            
+            
+        
+       
